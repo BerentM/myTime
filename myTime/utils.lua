@@ -76,6 +76,10 @@ function M:readCsv(path, sep)
     return out
 end
 
+---Append table to end of file.
+---@param path string
+---@param inputTable table
+---@param sep string
 function M:appendCsv(path, inputTable, sep)
     local file = io.open(path, "a+")
     if file == nil then return end
@@ -86,24 +90,20 @@ function M:appendCsv(path, inputTable, sep)
     file:close()
 end
 
+---Pop last row from the file.
+---@param path string
 function M:removeLastRowCsv(path)
     local file = io.open(path, "r")
     if file == nil then return end
-
-    local lines = {}
-    for line in file:lines() do
-        table.insert(lines, line)
-    end
+    local old_str = file:read("a")
+    -- https://stackoverflow.com/questions/64844032/how-to-remove-last-line-from-a-string-in-lua
+    local new_str = old_str:gsub("\n[^\n]*(\n?)$", "%1")
     file:close()
 
     file = io.open(path, "w")
-    for i, line in pairs(lines) do
-        if i < #lines then
-            file:write(line.."\n")
-        end
-    end
+    file:seek("set")
+    file:write(new_str)
     file:close()
-
 end
 
 ---Speed test function, uses CPU time.
