@@ -35,6 +35,4 @@ show:option "-t --time"
 show:option "-a --all"
     :description "Show whole file."
 
-local args = parser:parse()
-
-return args
+return parser:parse()
