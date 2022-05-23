@@ -28,7 +28,7 @@ parser:group("Add new entry.",
 
 parser:group("Show output options.",
     parser:option "-s --show"
-        :description "Show summary"
+        :description "Show file summary."
 )
 
 local args = parser:parse()
