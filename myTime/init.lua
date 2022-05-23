@@ -13,4 +13,5 @@ function M:name(name)
     return "Hello, " .. name .. "!"
 end
 
+--TODO: parse cli args and put them into table that could be added into csv file
 return M

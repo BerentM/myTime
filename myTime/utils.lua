@@ -1,4 +1,5 @@
 local M = {}
+-- TODO: think about switching from csv to sqlite table
 
 -- TODO: simplify it, func copied from internet
 function tprint(tbl, indent)
