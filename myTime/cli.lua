@@ -6,30 +6,34 @@ local parser = argparse() {
     description = "Tool for time reporting/management.",
     epilog = "For more info, see https://github.com/BerentM/myTime"
 }
+parser:require_command(false)
+    :help_usage_margin(4)
 
-parser:help_usage_margin(4)
-    :help_vertical_space(1)
+parser:add_help_command()
+local show = parser:command "show"
+    :description "Show file summary."
+local add = parser:command "add"
+    :description "Add new entry"
 
-parser:group("General`",
-    parser:argument "path"
-        :description "CSV file path."
-        :default (os.date("./%m%G.csv"))
-)
-parser:group("Add new entry.",
-    parser:option "-d --date"
-        :description "Provide valid date [YYYY-MM-DD]."
-        :default (os.date("%G-%m-%d")),
-    parser:option "-t --time"
-        :description "How many hours have you worked?"
-        :default "8",
-    parser:option "-m --message"
-        :description "What have you been doing?"
-)
+add:argument "path"
+    :description "CSV file path."
+    :default(os.date("./%m%G.csv"))
+add:option "-d --date"
+    :description "Provide valid date [YYYY-MM-DD]."
+    :default(os.date("%G-%m-%d"))
+add:option "-t --time"
+    :description "How many hours have you worked?"
+    :default "8"
+add:option "-m --message"
+    :description "What have you been doing?"
 
-parser:group("Show output options.",
-    parser:option "-s --show"
-        :description "Show file summary."
-)
+show:argument "path"
+    :description "CSV file path."
+    :default(os.date("./%m%G.csv"))
+show:option "-t --time"
+    :description "Show time summary."
+show:option "-a --all"
+    :description "Show whole file."
 
 local args = parser:parse()
 
