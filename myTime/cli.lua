@@ -15,7 +15,9 @@ local show = parser:command "show"
 local add = parser:command "add"
     :description "Add new entry"
 
-add:argument "path"
+add:argument "message"
+    :description "What have you been doing?"
+add:option "-p --path"
     :description "CSV file path."
     :default(os.date("./%m%G.csv"))
 add:option "-d --date"
@@ -24,10 +26,8 @@ add:option "-d --date"
 add:option "-t --time"
     :description "How many hours have you worked?"
     :default "8"
-add:option "-m --message"
-    :description "What have you been doing?"
 
-show:argument "path"
+show:option "-p --path"
     :description "CSV file path."
     :default(os.date("./%m%G.csv"))
 show:option "-t --time"
