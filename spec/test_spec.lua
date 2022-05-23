@@ -44,9 +44,9 @@ describe("hello tests", function()
             local input = { 1, 2, 3 }
             local out = utils:createLine(input, ";")
             assert.are.equal("1;2;3\n", out)
-            input = { "a", "B", "c" }
+            input = { "1", "B", "2022-05-23" }
             out = utils:createLine(input, ",")
-            assert.are.equal("a,B,c\n", out)
+            assert.are.equal("1,B,2022-05-23\n", out)
         end)
         it("save new rows", function()
             local input = { 1, 2, 3 }
