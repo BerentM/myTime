@@ -58,5 +58,11 @@ describe("hello tests", function()
 
             utils:removeLastRowCsv(filePath)
         end)
+        it("create new file", function()
+            local input = { 1, 2, 3 }
+            local path = "spec/temp.csv"
+            utils:appendCsv(path, input, ";")
+            os.remove(path)
+        end)
     end)
 end)
