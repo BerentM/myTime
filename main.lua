@@ -1,2 +1,4 @@
-local utils = require("myTime.utils")
-local args = require("myTime.cli")
+local mt = require("myTime")
+
+mt:showArgs()
+mt:run()

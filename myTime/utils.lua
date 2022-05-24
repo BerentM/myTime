@@ -2,7 +2,7 @@ local M = {}
 -- TODO: think about switching from csv to sqlite table
 
 -- TODO: simplify it, func copied from internet
-function tprint(tbl, indent)
+function M:tprint(tbl, indent)
     if not indent then indent = 0 end
     local toprint = string.rep(" ", indent) .. "{\r\n"
     indent = indent + 2
@@ -73,6 +73,17 @@ function M:readCsv(path, sep)
         if line == nil then break end
         table.insert(out, M:splitString(line, sep))
     end
+
+    return out
+end
+
+---Read file and return it as raw string.
+---@param path string
+---@return string
+function M:rawCsv(path)
+    local file = io.open(path, "r")
+    if file == nil then return end
+    local out = file:read("a")
 
     return out
 end
