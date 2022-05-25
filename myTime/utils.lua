@@ -131,4 +131,12 @@ function M:speed_test(f, ...)
     return os.clock() - s
 end
 
+function M:csvToMap(path, sep)
+    local tbl = M:readCsv(path, sep)
+    local new_map = {}
+    for _, value in ipairs(tbl) do
+      table.insert(new_map, date=value[1], hours=value[2], message=value[3])
+    end
+end
+
 return M
