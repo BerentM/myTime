@@ -1,5 +1,4 @@
 local utils = require("myTime.utils")
-local args = require("myTime.cli")
 
 local M = {}
 
@@ -17,11 +16,13 @@ function M:name(name)
 end
 
 --TODO: parse cli args and put them into table that could be added into csv file
-function M:showArgs()
+function M:showArgs(cliArgs)
+    local args = cliArgs or require("myTime.cli")
     print(utils:tprint(args))
 end
 
-function M:run()
+function M:run(cliArgs)
+    local args = cliArgs or require("myTime.cli")
     if args["add"] then
         local input = {args["date"], args["time"], args["message"]}
         utils:appendCsv(args["path"], input, ";")
