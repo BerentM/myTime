@@ -25,9 +25,13 @@ function M:run(cliArgs)
     local args = cliArgs or require("myTime.cli")
     if args["add"] then
         local input = { args["date"], args["time"], args["message"] }
-        utils:appendCsv(args["path"], input, ";")
+        utils:appendUniqueCsv(args["path"], input, ";")
     elseif args["show"] then
-        print(utils:rawCsv(args["path"]))
+        if args["all"] then
+            print(utils:rawCsv(args["path"]))
+        elseif args["time"] then
+            print(utils:sumTime(args["path"], ";"))
+        end
     end
 end
 
