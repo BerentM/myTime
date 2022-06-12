@@ -30,9 +30,9 @@ add:option "-t --time"
 show:option "-p --path"
     :description "CSV file path."
     :default(os.date("./%m%G.csv"))
-show:option "-t --time"
+show:flag "-t --time"
     :description "Show time summary."
-show:option "-a --all"
+show:flag "-a --all"
     :description "Show whole file."
 
 return parser:parse()
