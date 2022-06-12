@@ -151,6 +151,21 @@ function M:appendUniqueCsv(path, inputTable, sep)
     M:appendCsv(path, inputTable, sep)
 end
 
+---Sum time spent in work
+---@param path string
+---@param sep string
+---@return integer
+function M:sumTime(path, sep)
+    local contents = M:readCsv(path, sep)
+    local hours = 0
+
+    for _, line in ipairs(contents) do
+        hours = hours + line[2]
+    end
+
+    return hours
+end
+
 ---Speed test function, uses CPU time.
 ---@param f function
 ---@param ... any
