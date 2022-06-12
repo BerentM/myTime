@@ -118,7 +118,7 @@ function M:removeLastRowCsv(path)
     file:close()
 end
 
----Parse file and remove all rows that starts with check_value
+---Parse file, and remove all rows that starts with check_value.
 ---@param path string
 ---@param check_value string
 ---@param sep string
@@ -142,13 +142,45 @@ function M:removeOtherOccurences(path, check_value, sep)
     file:close()
 end
 
----Remove previous rows with the same first column value, and append new row
+---Convert csv file to map.
+---@param path string
+---@param sep string
+---@return table
+function M:csvToMap(path, sep)
+    local tbl = M:readCsv(path, sep)
+    local new_map = {}
+    for _, value in ipairs(tbl) do
+        table.insert(new_map, { date = value[1], hours = value[2], message = value[3] })
+    end
+    return new_map
+end
+
+---Sort csv file by its first key.
+---@param path string
+---@param sep string
+function M:sortCsvFile(path, sep)
+    local map = M:csvToMap(path, sep)
+    table.sort(map, function(a, b) return a.date < b.date end)
+
+    local file = io.open(path, "w+")
+    if file == nil then return end
+
+    for _, v in ipairs(map) do
+        local line = M:createLine({ v.date, v.hours, v.message }, sep)
+        file:write(line)
+    end
+
+    file:close()
+end
+
+---Deduplicate file, sort it and append new row.
 ---@param path string
 ---@param inputTable table
 ---@param sep string
-function M:appendUniqueCsv(path, inputTable, sep)
+function M:appendSortDeduplicateCsv(path, inputTable, sep)
     M:removeOtherOccurences(path, inputTable[1], sep)
     M:appendCsv(path, inputTable, sep)
+    M:sortCsvFile(path, sep)
 end
 
 ---Sum time spent in work
@@ -177,14 +209,6 @@ function M:speed_test(f, ...)
         f(...)
     end
     return os.clock() - s
-end
-
-function M:csvToMap(path, sep)
-    local tbl = M:readCsv(path, sep)
-    local new_map = {}
-    for _, value in ipairs(tbl) do
-      table.insert(new_map, date=value[1], hours=value[2], message=value[3])
-    end
 end
 
 return M

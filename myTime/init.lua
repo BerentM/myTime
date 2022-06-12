@@ -25,7 +25,7 @@ function M:run(cliArgs)
     local args = cliArgs or require("myTime.cli")
     if args["add"] then
         local input = { args["date"], args["time"], args["message"] }
-        utils:appendUniqueCsv(args["path"], input, ";")
+        utils:appendSortDeduplicateCsv(args["path"], input, ";")
     elseif args["show"] then
         if args["all"] then
             print(utils:rawCsv(args["path"]))
