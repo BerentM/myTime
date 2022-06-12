@@ -118,6 +118,39 @@ function M:removeLastRowCsv(path)
     file:close()
 end
 
+---Parse file and remove all rows that starts with check_value
+---@param path string
+---@param check_value string
+---@param sep string
+function M:removeOtherOccurences(path, check_value, sep)
+    local contents = M:readCsv(path, sep)
+    local new_contents = {}
+
+    for _, line in ipairs(contents) do
+        if line[1] ~= check_value then
+            table.insert(new_contents, line)
+        end
+    end
+
+    local file = io.open(path, "w+")
+    if file == nil then return end
+
+    for _, inputTable in ipairs(new_contents) do
+        local line = M:createLine(inputTable, sep)
+        file:write(line)
+    end
+    file:close()
+end
+
+---Remove previous rows with the same first column value, and append new row
+---@param path string
+---@param inputTable table
+---@param sep string
+function M:appendUniqueCsv(path, inputTable, sep)
+    M:removeOtherOccurences(path, inputTable[1], sep)
+    M:appendCsv(path, inputTable, sep)
+end
+
 ---Speed test function, uses CPU time.
 ---@param f function
 ---@param ... any
