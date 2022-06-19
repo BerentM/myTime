@@ -124,6 +124,7 @@ end
 ---@param sep string
 function M:removeOtherOccurences(path, check_value, sep)
     local contents = M:readCsv(path, sep)
+    if contents == nil then return end
     local new_contents = {}
 
     for _, line in ipairs(contents) do
