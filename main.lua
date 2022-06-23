@@ -1,4 +1,5 @@
 local mt = require("myTime")
 
-mt:showArgs()
+-- argparse debugging
+-- mt:showArgs()
 mt:run()

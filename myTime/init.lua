@@ -15,7 +15,8 @@ function M:name(name)
     return "Hello, " .. name .. "!"
 end
 
---TODO: parse cli args and put them into table that could be added into csv file
+---debug function
+---@param cliArgs table or nil
 function M:showArgs(cliArgs)
     local args = cliArgs or require("myTime.cli")
     print(utils:tprint(args))
@@ -30,7 +31,6 @@ function M:run(cliArgs)
         if args["time"] then
             print(utils:sumTime(args["path"], ";"))
         else
-        -- if args["all"] or (args["all"] == nil and args["time"] == nil) then
             print(utils:rawCsv(args["path"]))
         end
     end
