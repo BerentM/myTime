@@ -27,10 +27,11 @@ function M:run(cliArgs)
         local input = { args["date"], args["time"], args["message"] }
         utils:appendSortDeduplicateCsv(args["path"], input, ";")
     elseif args["show"] then
-        if args["all"] then
-            print(utils:rawCsv(args["path"]))
-        elseif args["time"] then
+        if args["time"] then
             print(utils:sumTime(args["path"], ";"))
+        else
+        -- if args["all"] or (args["all"] == nil and args["time"] == nil) then
+            print(utils:rawCsv(args["path"]))
         end
     end
 end
