@@ -17,6 +17,8 @@ local add = parser:command "add"
 
 add:argument "message"
     :description "What have you been doing?"
+    -- atleast one word or more -> passed further as table
+    :args("1+")
 add:option "-p --path"
     :description "CSV file path."
     :default(os.date("./%m%G.csv"))

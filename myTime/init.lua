@@ -25,7 +25,15 @@ end
 function M:run(cliArgs)
     local args = cliArgs or require("myTime.cli")
     if args["add"] then
-        local input = { args["date"], args["time"], args["message"] }
+        local message = ""
+        for index, value in ipairs(args["message"]) do
+            -- message arg is passed as table, unpack and format it
+            message = message .. value
+            if index < #args["message"] then
+                message = message .. " "
+            end
+        end
+        local input = { args["date"], args["time"], message }
         utils:appendSortDeduplicateCsv(args["path"], input, ";")
     elseif args["show"] then
         if args["time"] then
